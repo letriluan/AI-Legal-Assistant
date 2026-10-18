@@ -1,6 +1,8 @@
 {
   "source": "Original submitted results.json supplied by the repository owner",
   "records": 2000,
-  "sha256": "e9eca9f344b31ab57c4669c065e95991dac83e48fb759c046f59cd7fe66b6abe",
-  "purpose": "Archived output replay only; not ground-truth labels or newly generated legal answers"
+  "sha256": "37cc969963c1eafb5e246a0dbfc6b3b4d6a27efa748e07e62cbfcbd70c161fd7",
+  "purpose": "Archived output replay only; not ground-truth labels or newly generated legal answers",
+  "original_submission_sha256": "e9eca9f344b31ab57c4669c065e95991dac83e48fb759c046f59cd7fe66b6abe",
+  "encoding": "UTF-8; LF line endings; original question, answer and reference values preserved"
 }

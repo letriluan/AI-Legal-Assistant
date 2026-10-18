@@ -49,3 +49,14 @@ def test_missing_database_fails_readiness(monkeypatch, tmp_path):
     monkeypatch.setenv("PREVIEW_DB_PATH", str(tmp_path / "missing.sqlite"))
     with TestClient(app) as client:
         assert client.get("/ready").status_code == 503
+
+
+def test_committed_archive_uses_lf_and_matches_manifest():
+    import hashlib
+    import subprocess
+
+    raw = subprocess.run(["git", "show", "HEAD:archive/submission_answers.json"],
+                         capture_output=True, check=True).stdout
+    manifest = json.loads((ROOT / "archive/manifest.json").read_text(encoding="utf-8"))
+    assert b"\r\n" not in raw
+    assert hashlib.sha256(raw).hexdigest() == manifest["sha256"]
