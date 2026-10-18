@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>AI Legal Assistant | Research Desk</title><link rel="stylesheet" href="/ui/styles.css?v=3"><script src="/ui/app.js?v=3" defer></script></head>
+<body>
+<header class="masthead"><a class="brand" href="/" aria-label="AI Legal Assistant home"><span class="brand-mark" aria-hidden="true">§</span><span>AI Legal Assistant<small>VIETNAMESE LEGAL RAG · BILINGUAL DEMO</small></span></a><div class="header-note"><span class="status-dot"></span> Local research desk <span class="version">PREVIEW / 01</span></div></header>
+<main>
+<aside class="research-notes">
+  <div class="section-kicker"><span>01 / THE PROJECT</span><span class="fine-rule"></span></div>
+  <h1>Legal questions.<br><em>Traceable answers.</em></h1>
+  <p class="introduction">Explore Vietnamese legal information through natural-language questions, with the relevant articles kept close to the answer.</p>
+  <p class="project-context">Built to help navigate legal documents across multiple sources: retrieve relevant context, generate a response, and inspect its references.</p>
+  <div class="corpus-strip"><div><strong>71,050</strong><span>article records</span></div><div><strong>Hybrid RAG</strong><span>lexical + semantic retrieval</span></div></div>
+  <section class="examples-section" aria-labelledby="examples-title"><div class="section-kicker"><span>02 / START A QUESTION</span><span class="fine-rule"></span></div><h2 id="examples-title">From the submission archive</h2><p class="hint">English questions with Vietnamese originals. Select an example to try.</p><div id="examples"></div></section>
+  <details class="method"><summary>How the pipeline works <span aria-hidden="true">↗</span></summary><p>Dual BM25 + BGE-M3 → reciprocal rank fusion → cross-encoder reranking → Qwen → citation selection.</p></details>
+  <p class="foot">A research prototype, not legal advice. Check source text, amendments and current applicability independently.</p>
+</aside>
+<section class="demo" aria-labelledby="desk-title">
+ <div class="demo-head"><div><span class="section-kicker">RESEARCH WORKSPACE</span><h2 id="desk-title">Question &amp; evidence</h2></div><button id="clear" type="button">Clear desk <span aria-hidden="true">↺</span></button></div>
+ <div class="mode-bar"><span id="mode">Checking mode…</span><span class="mode-marker" aria-hidden="true"></span></div>
+ <div class="banner" id="banner">Bilingual sample preview: saved Vietnamese outputs with prepared English translations.</div>
+ <div id="chat" role="log" aria-label="Questions and evidence" aria-live="polite"><div id="empty"><span class="document-icon" aria-hidden="true"><svg width="38" height="46" viewBox="0 0 38 46" fill="none"><path d="M7 2h16l9 9v32H7V2Z" stroke="currentColor" stroke-width="1.3"/><path d="M23 2v10h9M13 21h13M13 27h13M13 33h8" stroke="currentColor" stroke-width="1.3"/></svg></span><span class="empty-kicker">A PLACE TO BEGIN</span><h3>Ask a question.<br>Follow the evidence.</h3><p>Choose an English example to read its translated answer,<br>switch to the Vietnamese original, and inspect references.</p><div class="empty-flow"><span>Question</span><span aria-hidden="true">→</span><span>Answer</span><span aria-hidden="true">→</span><span>Sources</span></div></div></div>
+ <form id="form"><label for="question">YOUR QUESTION <span>English examples / Vietnamese</span></label><div class="input-frame"><textarea id="question" maxlength="2000" rows="2" placeholder="Select an English example, or enter a Vietnamese question…"></textarea><div class="actions"><span>Each question is independent</span><button id="send" type="submit" disabled>Ask question <span aria-hidden="true">↗</span></button></div></div><p class="composer-note">English translations explain saved outputs; they do not verify legal correctness.</p></form>
+</section>
+</main>
+</body></html>

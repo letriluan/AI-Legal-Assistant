@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-18",
+  "windows_tests": 19,
+  "docker_linux_tests": 19,
+  "ruff": "passed for app/tests; original extracted core and archived tools excluded",
+  "pip_check": "passed",
+  "javascript_syntax": "passed",
+  "artifact_rows": 71050,
+  "embedding_shape": [
+    71050,
+    1024
+  ],
+  "preview_http_examples": 6,
+  "docker_build": "passed",
+  "docker_preview_http_smoke": "passed",
+  "full_model_inference": "not run; user deferred model downloads",
+  "browser_visual_qa": "not run; local browser use disabled in Work settings",
+  "published": true,
+  "bilingual_update_date": "2026-10-19",
+  "bilingual_windows_tests": 27,
+  "bilingual_http_english_samples": 6,
+  "original_vietnamese_answers_and_reference_ids": "all six preserved exactly",
+  "bilingual_browser_visual_qa": "not run; browser automation disabled",
+  "source_publication_date": "2026-10-19",
+  "repository": "https://github.com/letriluan/AI-Legal-Assistant",
+  "hosted_demo": false
+}

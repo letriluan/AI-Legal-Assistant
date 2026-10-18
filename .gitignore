@@ -1,0 +1,23 @@
+# Credentials and machine settings
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+# Full source data, unsafe binary indexes, models and generated outputs
+/data/*
+!/data/README.md
+*.pkl
+*.npy
+*.safetensors
+*.bin
+/submission/
+/reports/
+/cache/
+*.log

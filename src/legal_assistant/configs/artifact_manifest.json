@@ -1,0 +1,18 @@
+{
+  "articles_phapdien64_web_canonical.jsonl": {
+    "sha256": "b81241f0cde56adbb379fd284b57274efe46bfcb8bcebc98e505452642e41870",
+    "bytes": 517717165
+  },
+  "bm25_dual_with_docs_phapdien64_web_canonical.pkl": {
+    "sha256": "f485bccefc558136cb3f558865c4aff9c422c84198268ad203a74d133384bb97",
+    "bytes": 703010716
+  },
+  "dense_bge_m3_phapdien64_web.npy": {
+    "sha256": "082259d1e4533b99f9b0d275bd1756da38a33b6ac0d6d20cb141cb5887a09efb",
+    "bytes": 291020928
+  },
+  "R2AIStage1DATA.json": {
+    "sha256": "5e5c5638fa0166432f1efa81b5ce465d5eb9d2b7c3783dd1aa5f11f66f9985bd",
+    "bytes": 530758
+  }
+}

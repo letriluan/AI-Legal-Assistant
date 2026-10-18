@@ -1,0 +1,160 @@
+[
+  {
+    "question": "Các cơ sở ươm tạo và khu làm việc chung được hưởng những chính sách hỗ trợ nào về thuế và đất đai?",
+    "answer": "Có, các cơ sở ươm tạo và khu làm việc chung được hưởng các chính sách hỗ trợ về thuế và đất đai theo Điều 12 của Luật Hỗ trợ doanh nghiệp nhỏ và vừa (số 04/2017/QH14). Cụ thể, họ được miễn, giảm tiền thuê đất, tiền sử dụng đất, thuế sử dụng đất phi nông nghiệp theo quy định của pháp luật; đồng thời cũng được miễn, giảm thuế thu nhập doanh nghiệp có thời hạn theo quy định của pháp luật về thuế thu nhập doanh nghiệp.",
+    "sources": [
+      {
+        "code": "04/2017/QH14",
+        "document": "Luật Hỗ trợ doanh nghiệp nhỏ và vừa",
+        "article": "Điều 12",
+        "excerpt": "Archived citation from the submitted output. Full article text is shown only in live RAG mode.",
+        "document_en": "Law on Support for Small and Medium-sized Enterprises",
+        "article_en": "Article 12"
+      }
+    ],
+    "question_en": "What tax and land-related support is available to business incubators and coworking spaces?",
+    "question_title_en": "Support for incubators & coworking spaces",
+    "topic_en": "SME support",
+    "answer_en": "Yes. Business incubators and coworking spaces receive tax and land-related support under Article 12 of the Law on Support for Small and Medium-sized Enterprises (No. 04/2017/QH14). Specifically, they are eligible for exemptions from or reductions in land rent, land-use fees and non-agricultural land-use tax as prescribed by law. They are also eligible for time-limited corporate income tax exemptions or reductions under corporate income tax law.",
+    "answer_language": "vi",
+    "translation_notice": "English translation of an archived Vietnamese response. Prepared for this demo; not an official legal translation or a newly generated answer.",
+    "review_note": "Archived model output; legal correctness and current applicability have not been independently verified."
+  },
+  {
+    "question": "Doanh nghiệp nhỏ và vừa được hưởng ưu đãi gì khi tham gia đấu thầu?",
+    "answer": "Doanh nghiệp nhỏ và vừa được hưởng ưu đãi trong lựa chọn nhà thầu theo quy định của pháp luật về đấu thầu. Cụ thể, doanh nghiệp nhỏ và siêu nhỏ khi tham gia đấu thầu để cung cấp dịch vụ tư vấn, dịch vụ phi tư vấn, xây lắp sẽ được tính ưu đãi như đối với trường hợp nhà thầu cung cấp hàng hóa có chi phí sản xuất trong nước chiếm tỷ lệ từ 25% trở lên.",
+    "sources": [
+      {
+        "code": "04/2017/QH14",
+        "document": "Luật Hỗ trợ doanh nghiệp nhỏ và vừa",
+        "article": "Điều 13",
+        "excerpt": "Archived citation from the submitted output. Full article text is shown only in live RAG mode.",
+        "document_en": "Law on Support for Small and Medium-sized Enterprises",
+        "article_en": "Article 13"
+      }
+    ],
+    "question_en": "What preferences do small and medium-sized enterprises receive when participating in procurement?",
+    "question_title_en": "SMEs in public procurement",
+    "topic_en": "Procurement",
+    "answer_en": "Small and medium-sized enterprises receive preferences in contractor selection under procurement law. Specifically, small and micro enterprises bidding to provide consulting services, non-consulting services or construction works receive preferences equivalent to those available to contractors supplying goods with domestic production costs accounting for at least 25%.",
+    "answer_language": "vi",
+    "translation_notice": "English translation of an archived Vietnamese response. Prepared for this demo; not an official legal translation or a newly generated answer.",
+    "review_note": "Archived model output; legal correctness and current applicability have not been independently verified."
+  },
+  {
+    "question": "Nếu công ty giữ bản chính bằng cấp của nhân viên khi ký hợp đồng thì sẽ bị xử lý như thế nào và phải khắc phục ra sao?",
+    "answer": "Theo Bộ luật Lao động (số 45/2019/QH14), người sử dụng lao động bị cấm giữ bản chính giấy tờ tùy thân, văn bằng, chứng chỉ của người lao động khi giao kết và thực hiện hợp đồng lao động. Hành vi này sẽ được coi là vi phạm pháp luật. Để khắc phục hậu quả, theo Bộ luật Lao động (số 45/2019/QH14), người sử dụng lao động cần trả lại bản chính giấy tờ tùy thân, văn bằng, chứng chỉ cho người lao động và không được giữ chúng nữa.",
+    "sources": [
+      {
+        "code": "45/2019/QH14",
+        "document": "Bộ luật Lao động",
+        "article": "Điều 17",
+        "excerpt": "Archived citation from the submitted output. Full article text is shown only in live RAG mode.",
+        "document_en": "Labour Code",
+        "article_en": "Article 17"
+      },
+      {
+        "code": "04/2021/NĐ-CP",
+        "document": "Xử lý vi phạm hành chính",
+        "article": "Điều 22",
+        "excerpt": "Archived citation from the submitted output. Full article text is shown only in live RAG mode.",
+        "document_en": "Handling of Administrative Violations",
+        "article_en": "Article 22"
+      }
+    ],
+    "question_en": "What happens if a company keeps an employee's original qualifications when signing an employment contract, and how must it remedy this?",
+    "question_title_en": "Employers retaining original qualifications",
+    "topic_en": "Employment",
+    "answer_en": "Under the Labour Code (No. 45/2019/QH14), employers are prohibited from retaining employees' original identity documents, qualifications or certificates when entering into and performing employment contracts. This conduct is considered a legal violation. To remedy the consequences, the archived answer states that the employer must return those original documents, qualifications and certificates to the employee and must no longer retain them.",
+    "answer_language": "vi",
+    "translation_notice": "English translation of an archived Vietnamese response. Prepared for this demo; not an official legal translation or a newly generated answer.",
+    "review_note": "Archived model output; legal correctness and current applicability have not been independently verified."
+  },
+  {
+    "question": "Hộ kinh doanh cần đáp ứng điều kiện gì để được hưởng hỗ trợ khi chuyển đổi thành doanh nghiệp nhỏ và vừa?",
+    "answer": "Hộ kinh doanh cần đáp ứng các điều kiện sau để được hưởng hỗ trợ khi chuyển đổi thành doanh nghiệp nhỏ và vừa: 1. Trước khi thành lập doanh nghiệp, hộ kinh doanh đã đăng ký và hoạt động theo quy định của pháp luật. 2. Hộ kinh doanh có hoạt động sản xuất, kinh doanh liên tục ít nhất là 01 năm tính đến ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu. Theo Điều 16 Luật Hỗ trợ doanh nghiệp nhỏ và vừa (số 04/2017/QH14).",
+    "sources": [
+      {
+        "code": "04/2017/QH14",
+        "document": "Luật Hỗ trợ doanh nghiệp nhỏ và vừa",
+        "article": "Điều 16",
+        "excerpt": "Archived citation from the submitted output. Full article text is shown only in live RAG mode.",
+        "document_en": "Law on Support for Small and Medium-sized Enterprises",
+        "article_en": "Article 16"
+      },
+      {
+        "code": "39/2018/NĐ-CP",
+        "document": "Nghị định Quy định chi tiết một số điều của Luật Hỗ trợ doanh nghiệp nhỏ và vừa",
+        "article": "Điều 15",
+        "excerpt": "Archived citation from the submitted output. Full article text is shown only in live RAG mode.",
+        "document_en": "Decree Detailing Certain Articles of the Law on Support for Small and Medium-sized Enterprises",
+        "article_en": "Article 15"
+      },
+      {
+        "code": "39/2018/NĐ-CP",
+        "document": "Nghị định Quy định chi tiết một số điều của Luật Hỗ trợ doanh nghiệp nhỏ và vừa",
+        "article": "Điều 16",
+        "excerpt": "Archived citation from the submitted output. Full article text is shown only in live RAG mode.",
+        "document_en": "Decree Detailing Certain Articles of the Law on Support for Small and Medium-sized Enterprises",
+        "article_en": "Article 16"
+      }
+    ],
+    "question_en": "What conditions must a household business meet to receive support when converting into an SME?",
+    "question_title_en": "Converting a household business into an SME",
+    "topic_en": "Business registration",
+    "answer_en": "To receive support when converting into a small or medium-sized enterprise, a household business must meet the following conditions:\n1. Before the enterprise is established, the household business must have been registered and operating in accordance with the law.\n2. It must have continuously carried out production or business activities for at least one year before the date on which its first enterprise registration certificate is issued.\nThe archived answer cites Article 16 of the Law on Support for Small and Medium-sized Enterprises (No. 04/2017/QH14).",
+    "answer_language": "vi",
+    "translation_notice": "English translation of an archived Vietnamese response. Prepared for this demo; not an official legal translation or a newly generated answer.",
+    "review_note": "Archived model output; legal correctness and current applicability have not been independently verified."
+  },
+  {
+    "question": "Công ty nhỏ và vừa được hỗ trợ giá thuê mặt bằng sản xuất trong thời gian tối đa là bao lâu?",
+    "answer": "Theo Điều 11 của Luật Hỗ trợ doanh nghiệp nhỏ và vừa (số 04/2017/QH14), thời gian hỗ trợ giá thuê mặt bằng sản xuất cho doanh nghiệp nhỏ và vừa là tối đa 05 năm kể từ ngày ký hợp đồng thuê mặt bằng.",
+    "sources": [
+      {
+        "code": "04/2017/QH14",
+        "document": "Luật Hỗ trợ doanh nghiệp nhỏ và vừa",
+        "article": "Điều 11",
+        "excerpt": "Archived citation from the submitted output. Full article text is shown only in live RAG mode.",
+        "document_en": "Law on Support for Small and Medium-sized Enterprises",
+        "article_en": "Article 11"
+      }
+    ],
+    "question_en": "What is the maximum period of support for SMEs renting production premises?",
+    "question_title_en": "Duration of production-premises rental support",
+    "topic_en": "SME support",
+    "answer_en": "According to Article 11 of the Law on Support for Small and Medium-sized Enterprises (No. 04/2017/QH14), support for the rental cost of production premises is available to SMEs for a maximum of five years from the date the premises lease is signed.",
+    "answer_language": "vi",
+    "translation_notice": "English translation of an archived Vietnamese response. Prepared for this demo; not an official legal translation or a newly generated answer.",
+    "review_note": "Archived model output; legal correctness and current applicability have not been independently verified."
+  },
+  {
+    "question": "Khi lập Báo cáo tài chính năm, công ty phải trình bày những thông tin chung nào về doanh nghiệp?",
+    "answer": "Khi lập Báo cáo tài chính năm, công ty phải trình bày những thông tin chung sau về doanh nghiệp theo Thông tư số 58/2021/TT-BTC: Công ty phải nêu tên doanh nghiệp, địa chỉ trụ sở chính, loại hình doanh nghiệp, thời gian hoạt động, ngành nghề kinh doanh, vốn điều lệ và các thông tin khác theo quy định của pháp luật về báo cáo tài chính.",
+    "sources": [
+      {
+        "code": "133/2016/TT-BTC",
+        "document": "Thông tư Hướng dẫn chế độ kế toán doanh nghiệp nhỏ và vừa",
+        "article": "Điều 81",
+        "excerpt": "Archived citation from the submitted output. Full article text is shown only in live RAG mode.",
+        "document_en": "Circular Guiding the Accounting Regime for Small and Medium-sized Enterprises",
+        "article_en": "Article 81"
+      },
+      {
+        "code": "59/2020/QH14",
+        "document": "Luật Doanh nghiệp",
+        "article": "Điều 109",
+        "excerpt": "Archived citation from the submitted output. Full article text is shown only in live RAG mode.",
+        "document_en": "Law on Enterprises",
+        "article_en": "Article 109"
+      }
+    ],
+    "question_en": "What general company information must be presented in annual financial statements?",
+    "question_title_en": "Company information in financial statements",
+    "topic_en": "Accounting",
+    "answer_en": "When preparing annual financial statements, a company must present the following general information, according to Circular No. 58/2021/TT-BTC as cited in the archived answer: its name, registered head-office address, enterprise type, operating period, business activities, charter capital and other information required under financial-reporting law.",
+    "answer_language": "vi",
+    "translation_notice": "English translation of an archived Vietnamese response. Prepared for this demo; not an official legal translation or a newly generated answer.",
+    "review_note": "The archived answer cites Circular 58/2021/TT-BTC, while its saved references list 133/2016/TT-BTC and 59/2020/QH14. This mismatch is preserved for transparency; translating the answer does not validate it."
+  }
+]

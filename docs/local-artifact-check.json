@@ -1,0 +1,13 @@
+{
+  "rows": 71050,
+  "embedding_shape": [
+    71050,
+    1024
+  ],
+  "dtype": "float32",
+  "bm25_and_jsonl_row_order_matches": true,
+  "finite_embeddings": true,
+  "artifact_hashes_verified": true,
+  "elapsed_seconds": 11.66,
+  "model_loaded": false
+}
