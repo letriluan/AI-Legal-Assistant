@@ -42,3 +42,8 @@ label the supplied 0.6543 value as accuracy. This code release omits full data,
 indexes, model weights and full question/output sets. The six preview examples
 are explicitly labelled as archived outputs. Full-data redistribution rights and
 end-to-end live-model validation remain outside the scope of this code publication.
+
+
+### Archived preview expansion
+
+At the repository owner's request, all 2,000 original submitted question/answer records are now published in `archive/submission_answers.json`, with a SHA-256 manifest. A build step creates read-only SQLite for preview lookup, without loading retrieval models. Original answers and reference lists are preserved. Six curated English aliases/translations remain presentation aids; other records remain Vietnamese. No corpus, indexes or model weights are included. Earlier references above to six-only publication describe the initial release and are superseded by this expansion. Render deployment configuration is provided; it does not establish that a public service is already live.

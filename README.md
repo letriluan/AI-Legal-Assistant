@@ -4,7 +4,7 @@ A Vietnamese legal question-answering project for small and medium-sized enterpr
 
 **Python · FastAPI · BM25 · PyVi · BGE-M3 · Reciprocal Rank Fusion · BGE Reranker · Ollama/Qwen · NumPy · Docker**
 
-> The default app is a clearly labelled **bilingual saved-example preview**. Full RAG model inference has not been rerun in this refactor, and there is no hosted demo yet.
+> The default app is a clearly labelled **archived submission preview (2,000 answers)**. Full RAG model inference has not been rerun in this refactor, and there is no hosted demo yet.
 
 ## Why I Built It
 
@@ -55,7 +55,7 @@ Citation selection narrows reported sources; it is **not proof that every answer
 
 ## Run the Local Preview
 
-The preview requires no API key, Ollama server, model weights or full corpus. It returns **six saved submission examples**, preserving the original Vietnamese answers and adding prepared English translations. A different question receives an explanation instead of a fabricated model answer.
+The preview requires no API key, Ollama server, model weights or full corpus. It matches **2,000 saved submission questions**, preserving original Vietnamese answers and citations. Six curated examples also have prepared English translations. Browse the searchable question library to select a stored question. Matching normalizes Unicode, case and whitespace; it does not guess semantically similar answers. A different question receives an explanation instead of a fabricated model answer.
 
 ```bash
 git clone https://github.com/letriluan/AI-Legal-Assistant.git
@@ -64,6 +64,7 @@ python -m venv .venv
 # Activate: .venv\Scripts\Activate.ps1 (PowerShell)
 # or: source .venv/bin/activate (macOS/Linux)
 python -m pip install -c requirements-lock.txt -e ".[dev]"
+python scripts/build_preview_db.py
 python -m uvicorn legal_assistant.app:app --host 127.0.0.1 --port 8004
 ```
 
@@ -76,6 +77,16 @@ docker compose up --build
 ```
 
 Compose exposes only **127.0.0.1:8004**, runs as a non-root user and contains neither the full dataset nor pretrained models. It serves the saved-output preview, not full RAG. Stop with `docker compose down`.
+
+## Deploy the Preview on Render
+
+[Deploy preview to Render](https://render.com/deploy?repo=https://github.com/letriluan/AI-Legal-Assistant)
+
+Sign in to Render, connect this repository and create the Blueprint from `render.yaml`. It uses the Docker runtime, `APP_MODE=preview`, and `/ready` as its health check. No API keys, paid database, model downloads or Ollama are required. Hosting availability and free-plan limits depend on your Render account.
+
+During the image build, `scripts/build_preview_db.py` verifies the committed JSON checksum and creates a **read-only SQLite archive** inside the image. Render reads that local file; it does not query GitHub on every request. Redeploying rebuilds the same archive, so ephemeral runtime storage does not lose the source answers. A new archive version requires a commit and redeploy. No submitted user questions are saved.
+
+This hosted mode only replays saved answers. Unknown questions receive an explicit no-match message. The full retrieval/reranking/generation pipeline remains a **local setup** with separate data and model requirements below. The public preview has no model API costs; it is not a newly generated legal advice service.
 
 ## Full RAG Setup
 
@@ -102,6 +113,8 @@ Use `--all` for the full batch. This is a real local model run, not the preview,
 ## Validation
 
 Current local evidence:
+
+- **31 offline tests pass**, including exact preservation of all 2,000 archived records, read-only database enforcement, literal search, no-match behavior and API readiness.
 
 - **19 offline tests previously passed on Windows and Docker/Linux** for API validation, explicit preview behaviour, sanitized failures, concurrency rejection, rank fusion, Vietnamese tokenisation, small-corpus top-k bounds, reranking/formatting and long-context handling.
 - Full artifact checks found **71,050 matching BM25/JSONL document identities**, a finite `float32` matrix of **71,050 × 1,024**, and matching supplied-artifact checksums. No model weights were loaded.
@@ -138,6 +151,7 @@ python scripts/check_artifacts.py
 | Path | Contents |
 | --- | --- |
 | `src/legal_assistant/app.py`, `service.py` | Validated API and explicit preview/full-mode dispatch |
+| `archive/`, `render.yaml` | Checksummed submission answers and Render preview configuration |
 | `src/legal_assistant/runtime.py` | Checksummed artifact loading and optional model orchestration |
 | `src/legal_assistant/pipeline_core.py` | Extracted original retrieval, prompting, cleanup and citation algorithms |
 | `src/legal_assistant/configs/` | Original settings, artifact checksums and six archived example outputs |
@@ -153,4 +167,4 @@ This is an educational/research prototype, not legal advice. Always verify cited
 
 The app has no authenticated users, tenant permissions, public rate limiter, prompt-injection defence evaluation or audited legal-validity engine. The legacy verifier can retain candidates after verifier failures; see provenance notes. Readiness distinguishes preview from loaded full RAG but does not validate answer quality. The current full-mode runtime uses process-global pipeline state and must run with **one worker** and one in-flight request.
 
-Large artifacts, raw legal documents, the full question/output sets and model weights remain local and excluded from Git. Only six labelled output examples are included for the preview. The provided submission package did not include a complete corpus redistribution licence; no permission to redistribute the full dataset or models is implied. No new repository-wide licence has been assigned on behalf of other contributors.
+Large artifacts, raw legal documents, retrieval indexes and model weights remain local and excluded from Git. The owner-authorized archived set of 2,000 question/answer outputs is included under `archive/`; these are historical model outputs, not ground-truth legal labels. The provided submission package did not include a complete corpus redistribution licence; no permission to redistribute the full dataset or models is implied. No new repository-wide licence has been assigned on behalf of other contributors.

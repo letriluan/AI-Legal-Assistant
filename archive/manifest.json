@@ -1,0 +1,6 @@
+{
+  "source": "Original submitted results.json supplied by the repository owner",
+  "records": 2000,
+  "sha256": "e9eca9f344b31ab57c4669c065e95991dac83e48fb759c046f59cd7fe66b6abe",
+  "purpose": "Archived output replay only; not ground-truth labels or newly generated legal answers"
+}

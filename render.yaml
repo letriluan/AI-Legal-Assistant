@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ai-legal-assistant-preview
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /ready
+    envVars:
+      - key: APP_MODE
+        value: preview
+      - key: PREVIEW_DB_PATH
+        value: /app/preview.sqlite

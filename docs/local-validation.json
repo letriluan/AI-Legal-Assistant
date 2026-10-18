@@ -23,5 +23,13 @@
   "bilingual_browser_visual_qa": "not run; browser automation disabled",
   "source_publication_date": "2026-10-19",
   "repository": "https://github.com/letriluan/AI-Legal-Assistant",
-  "hosted_demo": false
+  "hosted_demo": false,
+  "archive_preview": {
+    "records": 2000,
+    "tests_passed": 31,
+    "all_original_records_preserved": true,
+    "readonly_sqlite": true,
+    "full_inference_run": false,
+    "public_deployment": "not yet created"
+  }
 }

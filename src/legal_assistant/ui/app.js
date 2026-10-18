@@ -74,7 +74,7 @@ $("form").addEventListener("submit",async event=>{
  message("user",question); controls(true); const article=message("assistant","Loading…");
  try {
   const response=await fetch("/ask",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({question}),signal:AbortSignal.timeout(300000)});
-  if(!response.ok)throw new Error(response.status===429?"Another request is running. Please retry shortly.":"Full RAG is unavailable. Check local artifacts, models and Ollama.");
+  if(!response.ok)throw new Error(response.status===429?"Another request is running. Please retry shortly.":"Service unavailable. Check the preview database or local RAG setup.");
   renderResponse(article,await response.json());
  } catch(error) {article.replaceChildren(element("p",error.message,"error"));}
  finally {controls(false);$("chat").scrollTop=$("chat").scrollHeight;}
@@ -83,7 +83,20 @@ async function initialize(){
  try {
   const response=await fetch("/examples"); if(!response.ok)throw new Error(); const data=await response.json(); appMode=data.mode;
   $("mode").textContent=appMode==="preview"?"Bilingual preview — no model calls":"Full RAG — Vietnamese generation";
-  $("banner").textContent=appMode==="preview"?"Saved Vietnamese responses with prepared English translations. No new answers are generated.":"English example questions map to Vietnamese originals. Live answers are not automatically translated.";
+  $("banner").textContent=appMode==="preview"?"2,000 archived submission answers. Six examples include English translations. Exact question matching only; full RAG runs locally.":"English example questions map to Vietnamese originals. Live answers are not automatically translated.";
+  if(appMode==="preview") {
+   const library=element("details","","archive-library"); library.append(element("summary","Browse 2,000 archived questions (Vietnamese)"));
+   const input=element("input"); input.type="search"; input.placeholder="Search a topic, e.g. bao hiem"; input.setAttribute("aria-label","Search archived questions");
+   const results=element("div"); library.append(input,results); $("examples").before(library);
+   let timer, revision=0;
+   async function search(){ const version=++revision; try {
+    const response=await fetch("/archive/questions?q="+encodeURIComponent(input.value)); if(!response.ok)throw new Error();
+    const payload=await response.json(); if(version!==revision)return; results.replaceChildren();
+    for(const row of payload.questions){const button=element("button",row.question,"archive-question");button.type="button";button.lang="vi";button.addEventListener("click",()=>{if(!busy){$("question").value=row.question;controls(false);$("question").focus();}});results.append(button);}
+    if(!payload.questions.length)results.append(element("p","No archived questions found."));
+   }catch{results.textContent="Question library unavailable.";} }
+   input.addEventListener("input",()=>{clearTimeout(timer);revision++;timer=setTimeout(search,250);}); library.addEventListener("toggle",()=>{if(library.open)search();});
+  }
   data.examples.forEach((example,index)=>{
    const button=element("button","","sample");button.type="button";button.setAttribute("aria-pressed","false");
    const label=element("span","","sample-label");

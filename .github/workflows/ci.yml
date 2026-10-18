@@ -13,6 +13,7 @@ jobs:
       - run: python -m pip install -c requirements-lock.txt -e ".[dev]"
       - run: python -m pip check
       - run: ruff check .
+      - run: python scripts/build_preview_db.py
       - run: pytest -q
       - run: python scripts/check_artifacts.py
       - run: docker compose config --quiet
