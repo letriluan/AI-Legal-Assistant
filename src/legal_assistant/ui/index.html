@@ -1,25 +1,125 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>AI Legal Assistant | Research Desk</title><link rel="stylesheet" href="/ui/styles.css?v=4"><script src="/ui/app.js?v=4" defer></script></head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>AI Legal Assistant | Statutory Research &amp; Citation Workbench</title>
+  <link rel="stylesheet" href="/ui/styles.css?v=6">
+  <script src="/ui/app.js?v=6" defer></script>
+</head>
 <body>
-<header class="masthead"><a class="brand" href="/" aria-label="AI Legal Assistant home"><span class="brand-mark" aria-hidden="true">§</span><span>AI Legal Assistant<small>VIETNAMESE LEGAL RAG · BILINGUAL DEMO</small></span></a><div class="header-note"><span class="status-dot"></span> Research preview <span class="version">PREVIEW / 01</span></div></header>
-<main>
-<aside class="research-notes">
-  <div class="section-kicker"><span>01 / THE PROJECT</span><span class="fine-rule"></span></div>
-  <h1>Legal questions.<br><em>Traceable answers.</em></h1>
-  <p class="introduction">Explore Vietnamese legal information through natural-language questions, with the relevant articles kept close to the answer.</p>
-  <p class="project-context">Built to help navigate legal documents across multiple sources: retrieve relevant context, generate a response, and inspect its references.</p>
-  <div class="corpus-strip"><div><strong>71,050</strong><span>article records</span></div><div><strong>Hybrid RAG</strong><span>lexical + semantic retrieval</span></div></div>
-  <section class="examples-section" aria-labelledby="examples-title"><div class="section-kicker"><span>02 / START A QUESTION</span><span class="fine-rule"></span></div><h2 id="examples-title">From the submission archive</h2><p class="hint">English questions with Vietnamese originals. Select an example to try.</p><div id="examples"></div></section>
-  <details class="method"><summary>How the pipeline works <span aria-hidden="true">↗</span></summary><p>Dual BM25 + BGE-M3 → reciprocal rank fusion → cross-encoder reranking → Qwen → citation selection.</p></details>
-  <p class="foot">A research prototype, not legal advice. Check source text, amendments and current applicability independently.</p>
-</aside>
-<section class="demo" aria-labelledby="desk-title">
- <div class="demo-head"><div><span class="section-kicker">RESEARCH WORKSPACE</span><h2 id="desk-title">Question &amp; evidence</h2></div><button id="clear" type="button">Clear desk <span aria-hidden="true">↺</span></button></div>
- <div class="mode-bar"><span id="mode">Checking mode…</span><span class="mode-marker" aria-hidden="true"></span></div>
- <div class="banner" id="banner">Archived submission preview — 2,000 saved answers. Full RAG runs locally.</div>
- <div id="chat" role="log" aria-label="Questions and evidence" aria-live="polite"><div id="empty"><span class="document-icon" aria-hidden="true"><svg width="38" height="46" viewBox="0 0 38 46" fill="none"><path d="M7 2h16l9 9v32H7V2Z" stroke="currentColor" stroke-width="1.3"/><path d="M23 2v10h9M13 21h13M13 27h13M13 33h8" stroke="currentColor" stroke-width="1.3"/></svg></span><span class="empty-kicker">A PLACE TO BEGIN</span><h3>Ask a question.<br>Follow the evidence.</h3><p>Choose an English example to read its translated answer,<br>switch to the Vietnamese original, and inspect references.</p><div class="empty-flow"><span>Question</span><span aria-hidden="true">→</span><span>Answer</span><span aria-hidden="true">→</span><span>Sources</span></div></div></div>
- <form id="form"><label for="question">YOUR QUESTION <span>English examples / Vietnamese</span></label><div class="input-frame"><textarea id="question" maxlength="2000" rows="2" placeholder="Select an English example, or enter a Vietnamese question…"></textarea><div class="actions"><span>Each question is independent</span><button id="send" type="submit" disabled>Ask question <span aria-hidden="true">↗</span></button></div></div><p class="composer-note">English translations explain saved outputs; they do not verify legal correctness.</p></form>
-</section>
-</main>
-</body></html>
+  <header class="masthead">
+    <a class="brand" href="/" aria-label="AI Legal Assistant home">
+      <span class="brand-mark" aria-hidden="true">§</span>
+      <span class="brand-text">
+        <strong>LexRAG Workbench</strong>
+        <small>VIETNAMESE STATUTORY HYBRID RAG · CITATION ENGINE</small>
+      </span>
+    </a>
+    <div class="pipeline-strip" aria-label="RAG Architecture">
+      <span class="pipe-step"><b>71,050</b> Statutory Articles</span>
+      <span class="pipe-sep" aria-hidden="true">·</span>
+      <span class="pipe-step">Dual BM25 + BGE-M3</span>
+      <span class="pipe-sep" aria-hidden="true">→</span>
+      <span class="pipe-step">2-Stage RRF</span>
+      <span class="pipe-sep" aria-hidden="true">→</span>
+      <span class="pipe-step">Cross-Encoder Rerank</span>
+      <span class="pipe-sep" aria-hidden="true">→</span>
+      <span class="pipe-step">Qwen 2.5 + Citation Selector</span>
+    </div>
+    <div class="header-note">
+      <div class="mode-bar">
+        <span class="status-dot"></span>
+        <span id="mode">Checking mode…</span>
+        <span class="mode-marker" aria-hidden="true"></span>
+      </div>
+      <a class="repo-link" href="https://github.com/letriluan/AI-Legal-Assistant" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+    </div>
+  </header>
+
+  <main class="workbench">
+    <!-- TOP SEARCH & CASE SELECTOR COMMAND DECK -->
+    <section class="command-deck" aria-labelledby="deck-title">
+      <div class="deck-top">
+        <div class="deck-intro">
+          <div class="section-kicker"><span>STATUTORY RESEARCH ENGINE</span><span class="fine-rule"></span></div>
+          <h1 id="deck-title">Legal Inquiry &amp; Evidence Verification</h1>
+          <p class="introduction">Query Vietnamese business and enterprise law across 71,050 statutory records. Inspect bilingual legal briefs alongside verified document and article citations.</p>
+        </div>
+        <div class="deck-banner">
+          <div class="banner" id="banner">Archived submission preview — 2,000 saved answers. Full RAG runs locally.</div>
+        </div>
+      </div>
+
+      <!-- SEARCH COMPOSER BAR (TOP-MOUNTED, NOT A BOTTOM CHAT INPUT) -->
+      <form id="form" class="search-form">
+        <div class="search-bar-header">
+          <label for="question">STATUTORY QUERY INPUT <span>Select a curated bilingual brief below, browse the 2,000-case archive, or enter a Vietnamese legal question</span></label>
+          <button id="clear" type="button">Reset Brief <span aria-hidden="true">↺</span></button>
+        </div>
+        <div class="input-frame">
+          <span class="search-icon" aria-hidden="true">§</span>
+          <textarea id="question" maxlength="2000" rows="2" placeholder="Select a curated English legal case below, or enter a Vietnamese statutory question…"></textarea>
+          <div class="actions">
+            <button id="send" type="submit" disabled>Analyze &amp; Cite <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+        <div class="search-meta-bar">
+          <p class="composer-note">Research prototype — not legal advice. English translations explain saved submission outputs.</p>
+          <span class="independent-note">Single-turn statutory analysis</span>
+        </div>
+      </form>
+
+      <!-- CURATED BILINGUAL CASE CARDS (HORIZONTAL GRID) -->
+      <section class="examples-section" aria-labelledby="examples-title">
+        <div class="examples-bar">
+          <div class="section-kicker"><span>CURATED BILINGUAL CASE BRIEFS (06)</span></div>
+          <h2 id="examples-title" class="sr-only">From the submission archive</h2>
+          <span class="hint">Click any case card to load and inspect its legal brief &amp; statutory citations</span>
+        </div>
+        <div id="examples" class="case-grid"></div>
+      </section>
+    </section>
+
+    <!-- BOTTOM LEGAL DOSSIER & CITATION WORKBENCH -->
+    <section class="demo dossier-stage" aria-labelledby="desk-title">
+      <div class="demo-head">
+        <div>
+          <span class="section-kicker">LEGAL BRIEF &amp; STATUTORY CITATION DOSSIER</span>
+          <h2 id="desk-title">Synthesis &amp; Referenced Articles</h2>
+        </div>
+        <div class="dossier-badges">
+          <span class="badge-pill">Corpus: PhapDien + Legal Web (71,050 docs)</span>
+          <span class="badge-pill">Vector Dim: 1,024 (BGE-M3)</span>
+        </div>
+      </div>
+
+      <div id="chat" role="log" aria-label="Questions and evidence" aria-live="polite">
+        <div id="empty">
+          <div class="empty-card">
+            <span class="document-icon" aria-hidden="true">
+              <svg width="42" height="50" viewBox="0 0 38 46" fill="none">
+                <path d="M7 2h16l9 9v32H7V2Z" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M23 2v10h9M13 21h13M13 27h13M13 33h8" stroke="currentColor" stroke-width="1.4"/>
+              </svg>
+            </span>
+            <span class="empty-kicker">NO ACTIVE DOCKET SELECTED</span>
+            <h3>Select a Legal Case Card Above to Inspect the Brief</h3>
+            <p>Unlike a conversational chatbot, this workbench generates a structured <strong>Legal Research Dossier</strong>:<br>pairing the synthesized legal opinion on the left with verified <strong>Statutory Articles (Điều / Văn bản)</strong> on the right.</p>
+            <div class="empty-flow">
+              <span>1. Legal Inquiry</span>
+              <span aria-hidden="true">→</span>
+              <span>2. Hybrid BM25 + BGE-M3 Retrieval</span>
+              <span aria-hidden="true">→</span>
+              <span>3. Cross-Encoder Reranking</span>
+              <span aria-hidden="true">→</span>
+              <span>4. Grounded Statutory Dossier</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
