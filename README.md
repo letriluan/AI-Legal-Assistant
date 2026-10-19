@@ -2,17 +2,17 @@
 
 ## [Try the Live Preview →](https://ai-legal-assistant-preview.onrender.com/)
 
-A Vietnamese business-law question-answering system powered by **hybrid retrieval (BM25 + BGE-M3), two-stage Reciprocal Rank Fusion, Cross-Encoder reranking and citation-grounded generation**.
+A Vietnamese business-law question-answering system powered by **hybrid retrieval (BM25 + BGE-M3), two-stage Reciprocal Rank Fusion, Cross-Encoder reranking and citation-aware generation**.
 
 **Python · FastAPI · BM25 · PyVi · BGE-M3 Embeddings · Reciprocal Rank Fusion · BGE Reranker · Qwen 2.5 (Ollama) · NumPy · SQLite · Docker · GitHub Actions**
 
-> **Live Demo Mode:** The hosted Render deployment runs in lightweight **Archive Preview Mode**, serving **2,000 pre-computed submission answers** (including 6 bilingual English/Vietnamese examples) from a read-only SQLite database with zero cloud GPU cost. Full end-to-end RAG inference (`BGE-M3` + `BGE Reranker` + `Qwen 2.5 7B`) is supported for local execution.
+> **Live Demo Mode:** The hosted Render deployment runs in lightweight **Archive Preview Mode**, serving **2,000 pre-computed submission answers** (including 6 bilingual English/Vietnamese examples) from a read-only SQLite database with zero cloud GPU cost. Questions outside the 2,000 archived ones return an explicit no-match message; the hosted preview does not run the live model. Full end-to-end RAG inference (`BGE-M3` + `BGE Reranker` + `Qwen 2.5 7B`) is available for local execution. The pipeline originates from the competition submission; it has not been re-verified end to end since the refactor.
 
 ---
 
 ## Why I Built It
 
-Legal regulations for small and medium-sized enterprises (SMEs) in Vietnam span thousands of decrees, circulars and laws, making it difficult to pinpoint the exact articles applicable to a business question. I built this system to connect natural-language questions to a canonical corpus of **71,050 statutory articles** and return grounded answers alongside verifiable document and article references.
+Legal regulations for small and medium-sized enterprises (SMEs) in Vietnam span thousands of decrees, circulars and laws, making it difficult to pinpoint the exact articles applicable to a business question. I built this system to connect natural-language questions to a canonical corpus of **71,050 statutory articles** and return answers alongside selected document and article references.
 
 This repository refactors the original competition notebook pipeline into a modular FastAPI web service and interactive legal search interface while preserving the exact retrieval, reranking and citation-selection algorithms.
 
@@ -29,8 +29,8 @@ flowchart TD
     D --> RF2
     RF2 --> R[BGE Cross-Encoder Reranking - Top 160 → 8 Articles]
     R --> G[Qwen 2.5 7B Answer Generation via Ollama]
-    G --> C[Post-Processing & Citation Verification]
-    C --> A[Grounded Answer + Document/Article Citations]
+    G --> C[Post-Processing & Citation Selection]
+    C --> A[Answer + Citations]
 ```
 
 ### Key Pipeline Components
@@ -38,11 +38,11 @@ flowchart TD
 | Component | Technical Implementation |
 | --- | --- |
 | **Dual BM25 Lexical Retrieval** | Searches Vietnamese statutory text both with and without diacritics using `PyVi` word segmentation (`top_k = 200` per branch). |
-| **BGE-M3 Dense Retrieval** | Encodes queries into 1,024-dimensional embeddings and computes exact NumPy dot-product similarity against the memory-mapped `71,050 × 1,024` article matrix (`top_k = 200`). |
+| **BGE-M3 Dense Retrieval** | Encodes queries into 1,024-dimensional embeddings and computes exact NumPy dot-product similarity against the memory-mapped `71,050 × 1,024` article matrix (`top_k = 200`, `mmap_mode="r"` in `runtime.py`). |
 | **Two-Stage Reciprocal Rank Fusion (RRF)** | Fuses diacritic and non-diacritic BM25 rankings (`top 160`), then fuses the lexical family with dense retrieval (`top 200`, `rrf_k = 60`). |
-| **Cross-Encoder Reranking** | Reranks the top 160 fused candidates using `BAAI/bge-reranker-v2-m3` and selects the top 8 articles as grounded LLM context. |
-| **Qwen 2.5 7B Generation** | Generates structured Vietnamese legal responses conditioned strictly on the reranked statutory context via Ollama. |
-| **Citation Selector & Guardrails** | Applies domain/lexical overlap heuristics, score-band filtering (`0.90–0.92`) and selective LLM veto checks to attach up to 3 verified article citations per answer. |
+| **Cross-Encoder Reranking** | Reranks the top 160 fused candidates using `BAAI/bge-reranker-v2-m3` and selects the top 8 articles as LLM context. |
+| **Qwen 2.5 7B Generation** | Generates structured Vietnamese legal responses conditioned on the reranked statutory context via Ollama. |
+| **Citation Selector & Guardrails** | Applies domain/lexical overlap heuristics, a same-document score-band rule (`0.90–0.92` in `submission_v6_3.json`) and selective LLM veto checks to attach up to 3 selected article citations per answer. |
 | **FastAPI Service & Bilingual UI** | Serves a single-column legal search interface with English/Vietnamese tabs for curated examples, searchable access to all 2,000 archived questions and SHA-256 artifact checksum verification. |
 
 Pipeline hyperparameters are stored in [`submission_v6_3.json`](src/legal_assistant/configs/submission_v6_3.json).
@@ -128,6 +128,8 @@ python scripts/check_artifacts.py
 | `notebooks/submission_pipeline.ipynb` | Original end-to-end research and competition notebook |
 | `scripts/data_pipeline/` | Corpus canonicalisation, deduplication and BM25 index construction scripts |
 | `tests/` | Unit and API regression tests |
+
+Citation selection narrows the reported sources; it does not guarantee that every answer is fully supported or legally current. No retrieval-quality benchmark has been rerun on this refactor.
 
 ## Disclaimer
 
