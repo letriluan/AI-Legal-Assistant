@@ -16,18 +16,17 @@ function controls(value) {
   $("clear").disabled = value;
   document.querySelectorAll(".sample").forEach(button => button.disabled = value);
   $("send").disabled = value || !$("question").value.trim();
-  $("send").textContent = value ? "Synthesizing Brief…" : "Analyze & Cite →";
+  $("send").textContent = value ? "Searching…" : "Search Law";
 }
 
 function message(role, text) {
   $("empty")?.remove();
-  // In a Legal Dossier workbench, each new inquiry replaces the active brief cleanly
   if (role === "user") {
     $("chat").replaceChildren();
   }
   const article = element("article", "", "message " + role);
   article.append(
-    element("strong", role === "user" ? "ACTIVE STATUTORY INQUIRY" : "LEGAL SYNTHESIS & STATUTORY CITATIONS"),
+    element("strong", role === "user" ? "Question" : "Answer"),
     element("p", text)
   );
   $("chat").append(article);
@@ -37,18 +36,12 @@ function message(role, text) {
 function renderResponse(article, data) {
   article.replaceChildren();
 
-  // Create 2-column Legal Dossier layout: Left = Legal Opinion Brief, Right = Statutory Evidence Cards
-  const grid = element("div", "", "dossier-grid");
-  const opinionCol = element("div", "", "opinion-col");
-  const evidenceCol = element("aside", "", "evidence-col");
-
-  // Header inside Opinion column
-  const opinionHeader = element("div", "", "opinion-header");
-  opinionHeader.append(
-    element("strong", "SYNTHESIZED LEGAL OPINION"),
-    element("span", data.mode === "preview" ? "ARCHIVED SUBMISSION OUTPUT" : "LIVE RAG · " + Math.round(data.latency_ms) + " MS", "tag")
+  const header = element("div", "", "answer-header");
+  header.append(
+    element("strong", "Answer"),
+    element("span", data.mode === "preview" ? "Archived response" : "Live RAG · " + Math.round(data.latency_ms) + " ms", "tag")
   );
-  opinionCol.append(opinionHeader);
+  article.append(header);
 
   let shownText = data.answer;
   const bilingual = data.mode === "preview" && Boolean(data.answer_en);
@@ -65,12 +58,12 @@ function renderResponse(article, data) {
     panel.setAttribute("role", "tabpanel");
     panel.tabIndex = 0;
 
-    const content = element("p", "", "opinion-body");
+    const content = element("p");
     panel.append(content);
 
     const choices = [
-      { id: "en", label: "English Legal Brief", text: data.answer_en },
-      { id: "vi", label: "Original Vietnamese (Gốc)", text: data.answer }
+      { id: "en", label: "English translation", text: data.answer_en },
+      { id: "vi", label: "Original Vietnamese", text: data.answer }
     ];
 
     const buttons = choices.map(choice => {
@@ -94,7 +87,7 @@ function renderResponse(article, data) {
       shownText = choices[index].text;
       notice.textContent = index === 0
         ? data.translation_notice
-        : "Original Vietnamese output retained from the submission; not newly generated.";
+        : "Original Vietnamese output retained from the submission.";
       if (focus) buttons[index].focus();
     }
 
@@ -109,83 +102,55 @@ function renderResponse(article, data) {
     });
 
     select(0);
-    opinionCol.append(tabs, notice, panel);
+    article.append(tabs, notice, panel);
   } else {
-    const answer = element("p", data.answer, "opinion-body");
+    const answer = element("p", data.answer);
     if (data.mode === "rag") answer.lang = "vi";
-    opinionCol.append(answer);
+    article.append(answer);
     if (data.mode === "rag") {
-      opinionCol.append(
+      article.append(
         element("p", "Live answers are generated in Vietnamese. Prepared English translations are available only for saved preview examples.", "translation-note")
       );
     }
   }
 
-  if (data.review_note) {
-    opinionCol.append(element("p", data.review_note, "review-note"));
-  }
-
-  const footerBar = element("div", "", "opinion-footer");
-  const copy = element("button", "Copy Legal Opinion", "copy-answer");
+  const copy = element("button", "Copy answer", "copy-answer");
   copy.type = "button";
   copy.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(shownText);
-      copy.textContent = "Copied to Clipboard ✓";
+      copy.textContent = "Copied ✓";
     } catch {
       copy.textContent = "Copy unavailable";
     }
-    setTimeout(() => copy.textContent = "Copy Legal Opinion", 1800);
+    setTimeout(() => copy.textContent = "Copy answer", 1800);
   });
-  footerBar.append(copy);
-  opinionCol.append(footerBar);
+  article.append(copy);
 
-  // Populate Right Column: Statutory Citations & Evidence
-  const sources = data.sources || [];
-  const citeHeader = element("div", "", "evidence-header");
-  citeHeader.append(
-    element("h3", "CITED STATUTORY AUTHORITIES (" + sources.length + ")", "source-heading"),
-    element("span", "Selected via RRF + Cross-Encoder + Veto Rules", "evidence-subtitle")
-  );
-  evidenceCol.append(citeHeader);
-
-  if (!sources.length) {
-    evidenceCol.append(element("p", "No statutory citations attached to this response.", "no-sources"));
+  if (data.review_note) {
+    article.append(element("p", data.review_note, "review-note"));
   }
 
-  sources.forEach((source, idx) => {
+  const sources = data.sources || [];
+  if (sources.length) {
+    article.append(element("h3", "Cited Legal Articles (" + sources.length + ")", "source-heading"));
+  }
+
+  for (const source of sources) {
     const details = element("details", "", "source");
-    details.open = true; // Open by default in the Dossier view so citations stand out immediately!
-    const summaryTitle = [
-      source.article_en || source.article,
-      source.document_en || source.document,
-      source.code
-    ].filter(Boolean).join(" · ");
-
-    const sumEl = element("summary", "");
-    sumEl.append(
-      element("span", "EXHIBIT 0" + (idx + 1), "exhibit-badge"),
-      element("span", summaryTitle, "exhibit-title")
+    details.open = true;
+    details.append(
+      element("summary", [source.article_en || source.article, source.document_en || source.document, source.code].filter(Boolean).join(" · "))
     );
-    details.append(sumEl);
-
-    const bodyWrap = element("div", "", "source-body");
     const original = element("p", [source.article, source.document, source.code].filter(Boolean).join(" · "), "original-source");
     original.lang = "vi";
-    bodyWrap.append(
-      element("span", "OFFICIAL VIETNAMESE STATUTE REFERENCE", "source-kicker"),
+    details.append(
+      element("span", "Original Vietnamese reference:", "source-kicker"),
       original,
-      element("p", source.excerpt, "source-excerpt")
+      element("p", source.excerpt)
     );
-    if (source.document_en) {
-      bodyWrap.append(element("p", "English document titles are descriptive translations, not official legal translations.", "source-translation-note"));
-    }
-    details.append(bodyWrap);
-    evidenceCol.append(details);
-  });
-
-  grid.append(opinionCol, evidenceCol);
-  article.append(grid);
+    article.append(details);
+  }
 }
 
 $("question").addEventListener("input", () => controls(busy));
@@ -203,7 +168,7 @@ $("form").addEventListener("submit", async event => {
   if (!question || busy) return;
   message("user", question);
   controls(true);
-  const article = message("assistant", "Retrieving statutory articles & synthesizing legal brief…");
+  const article = message("assistant", "Loading…");
   try {
     const response = await fetch("/ask", {
       method: "POST",
@@ -232,21 +197,21 @@ async function initialize() {
     if (!response.ok) throw new Error();
     const data = await response.json();
     appMode = data.mode;
-    $("mode").textContent = appMode === "preview" ? "Bilingual Archive Mode (2,000 cases)" : "Live Hybrid RAG Mode";
+    $("mode").textContent = appMode === "preview" ? "Preview Mode (2,000 saved answers)" : "Full RAG Mode";
     $("banner").textContent = appMode === "preview"
-      ? "2,000 archived submission answers · 6 bilingual briefs with English translations · Exact match replay"
-      : "Live RAG active · English sample cards map to Vietnamese statutory queries";
+      ? "Preview mode: 2,000 archived answers in SQLite (6 include English translations). No live LLM cost."
+      : "Full RAG mode: English sample questions map to their original Vietnamese queries.";
 
     if (appMode === "preview") {
       const library = element("details", "", "archive-library");
-      library.append(element("summary", "🔍 Search Full 2,000-Question Vietnamese Statutory Archive (Click to expand)"));
+      library.append(element("summary", "Browse all 2,000 archived Vietnamese questions"));
       const input = element("input");
       input.type = "search";
-      input.placeholder = "Type a Vietnamese legal keyword, e.g. doanh nghiep, bao hiem, hop dong, thue…";
+      input.placeholder = "Filter by keyword (e.g. bao hiem, hop dong, thue)…";
       input.setAttribute("aria-label", "Search archived questions");
-      const results = element("div", "", "archive-results");
+      const results = element("div");
       library.append(input, results);
-      $("examples").before(library);
+      $("examples").after(library);
 
       let timer, revision = 0;
       async function search() {
@@ -289,21 +254,15 @@ async function initialize() {
       const button = element("button", "", "sample");
       button.type = "button";
       button.setAttribute("aria-pressed", "false");
-
-      const topRow = element("div", "", "sample-top");
-      topRow.append(
-        element("span", "CASE " + String(index + 1).padStart(2, "0"), "sample-number"),
-        element("span", example.topic_en, "sample-topic"),
-        element("span", "Inspect Brief →", "sample-arrow")
+      const label = element("span", "", "sample-label");
+      label.append(
+        element("span", (index + 1) + ". " + example.topic_en, "sample-topic"),
+        element("span", example.question_en, "sample-question-en")
       );
-
-      const label = element("div", "", "sample-label");
-      label.append(element("span", example.question_en, "sample-question-en"));
       const vietnamese = element("span", example.question, "sample-vi");
       vietnamese.lang = "vi";
       label.append(vietnamese);
-
-      button.append(topRow, label);
+      button.append(label);
       button.addEventListener("click", () => {
         if (!busy) {
           document.querySelectorAll(".sample").forEach(sample => sample.setAttribute("aria-pressed", String(sample === button)));
